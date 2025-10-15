@@ -14,14 +14,14 @@ avg_timesheet.columns = ["driverId", "avg_hours_logged", "avg_miles_logged"]
 # (driverId).
 timesheet_with_means = timesheet.merge(avg_timesheet[["driverId", "avg_hours_logged"]], on="driverId", how="left")
 timesheet_with_means = timesheet_with_means.rename(columns={"avg_hours_logged": "mean_hours_logged"})
-timesheet_with_means = timesheet_with_means[["driverId", "date", "hours-logged", "miles-logged", "mean_hours_logged"]]
-timesheet_with_means = timesheet_with_means.sort_values(by=["driverId", "date"])
+timesheet_with_means = timesheet_with_means[["driverId", "hours-logged", "miles-logged", "mean_hours_logged"]]
+timesheet_with_means = timesheet_with_means.sort_values(by=["driverId"])
 
 #Cree una tabla llamada "timesheet_below" a partir de "timesheet_with_means", filtrando los registros donde "hours-logged" sea menor que "mean_hours-logged".
 timesheet_below = timesheet_with_means[timesheet_with_means["hours-logged"] < timesheet_with_means["mean_hours_logged"]]
 timesheet_below = timesheet_below.reset_index(drop=True)
-timesheet_below = timesheet_below[["driverId", "date", "hours-logged", "miles-logged", "mean_hours_logged"]]
-timesheet_below = timesheet_below.sort_values(by=["driverId", "date"])
+timesheet_below = timesheet_below[["driverId", "hours-logged", "miles-logged", "mean_hours_logged"]]
+timesheet_below = timesheet_below.sort_values(by=["driverId"])
 timesheet_below = timesheet_below.reset_index(drop=True)
 
 #Cree una tabla llamada "sum_timesheet" agrupando la tabla "timesheet" por driverId y calculando la suma de las columnas "hours-logged" y "miles-logged".
